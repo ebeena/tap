@@ -1,1 +1,67 @@
-# tap
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>タップゲーム</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    #icon {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: url('https://cdn-icons-png.flaticon.com/512/25/25231.png') no-repeat center;
+      background-size: contain;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>タップゲーム</h1>
+  <div id="IMG_6463.jpeg"></div>
+  <p>スコア: <span id="score">0</span></p>
+  <p id="timer">残り時間: 20秒</p>
+
+  <script>
+    let score = 0;
+    let timeLeft = 20;
+    const icon = document.getElementById('icon');
+    const scoreDisplay = document.getElementById('score');
+    const timerDisplay = document.getElementById('timer');
+
+    function moveIconRandomly() {
+      const maxX = window.innerWidth - 100;
+      const maxY = window.innerHeight - 100;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+      icon.style.left = `${x}px`;
+      icon.style.top = `${y}px`;
+    }
+
+    icon.addEventListener('click', () => {
+      score++;
+      scoreDisplay.textContent = score;
+    });
+
+    const autoMove = setInterval(moveIconRandomly, 1000);
+
+    const countdown = setInterval(() => {
+      timeLeft--;
+      timerDisplay.textContent = `残り時間: ${timeLeft}秒`;
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        clearInterval(autoMove);
+        icon.remove();
+        alert(`ゲーム終了！スコア: ${score}`);
+      }
+    }, 1000);
+
+    moveIconRandomly(); // 初期位置
+  </script>
+</body>
+</html>
